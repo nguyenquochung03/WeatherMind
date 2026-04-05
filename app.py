@@ -252,6 +252,7 @@ if __name__ == "__main__":
     app, theme = build_app()
     app.queue()
     app.launch(
+        server_name="0.0.0.0",
         server_port=GRADIO_PORT,
         share=GRADIO_SHARE,
         show_error=True,

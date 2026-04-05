@@ -60,6 +60,47 @@ python app.py
 
 Truy cập vào ứng dụng qua giao diện trình duyệt tại: `http://127.0.0.1:7860/`
 
+---
+
+### 🐳 Chạy bằng Docker
+
+Bạn cũng có thể khởi chạy toàn bộ dự án thông qua Docker mà không cần phải thiết lập môi trường Python trên máy cá nhân.
+
+1. **Build Docker Image**
+Từ thư mục gốc dự án (nơi chứa `Dockerfile`), chạy lệnh:
+```bash
+docker build -t weathermind .
+```
+
+2. **Khởi chạy Docker Container**
+Đảm bảo bạn đã cấu hình xong file `.env`, sau đó chạy:
+```bash
+docker run -d --name weathermind_app -p 7860:7860 --env-file .env weathermind
+```
+
+3. Mở trình duyệt web của bạn và truy cập: `http://localhost:7860/`
+
+---
+
+### ☁️ Đưa lên Web (Deploy lên Render)
+
+Dự án này đã có sẵn `Dockerfile`, vì vậy việc đưa nó lên mạng (deploy) thông qua [Render.com](https://render.com/) là cực kỳ dễ dàng và miễn phí.
+
+**Các bước thực hiện:**
+1. Đẩy (push) thư mục dự án của bạn lên một repository trên **GitHub**.
+2. Đăng ký và đăng nhập vào Dashboard của **Render.com**.
+3. Nhấp vào nút **"New"** và chọn **"Web Service"**.
+4. Chọn **"Build and deploy from a Git repository"** và kết nối với repository GitHub mà bạn vừa tạo.
+5. Cấu hình ứng dụng:
+   - **Name:** Đặt một cái tên tuỳ ý (ví dụ: *weathermind-pro*).
+   - **Language/Environment:** Bạn ĐẢM BẢO chọn **`Docker`** (Render sẽ tự động nhận diện `Dockerfile`).
+   - **Instance Type:** Chọn gói **Free**.
+6. Cuộn xuống phần **Advanced** -> **Environment Variables**, nhấp "Add Environment Variable" và thêm:
+   - `OPENROUTER_API_KEY`: Dán mã OpenRouter API Key thật của bạn vào (BẮT BUỘC).
+   - `AI_MODEL`: `meta-llama/llama-3.2-3b-instruct:free` (hoặc model khác bạn muốn).
+7. Nhấp vào **"Create Web Service"**. Quá trình build sẽ bắt đầu và mất khoảng vài phút.
+8. Sau khi xong, Render sẽ cấp cho bạn một tên miền công khai dạng `https://weathermind-xxx.onrender.com`. Gửi link này cho bạn bè trải nghiệm nhé!
+
 ## 📁 Cấu trúc Dự án
 
 - `app.py`: Tệp khởi chạy chính chứa cấu hình Gradio, CSS tuỳ chỉnh và layout chung.
